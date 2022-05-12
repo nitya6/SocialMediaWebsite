@@ -14,7 +14,7 @@ Key functionalities of this website:-
 10)Displays trending news through newsapi
 11)Suggests people who we may know
 
-!(https://res.cloudinary.com/dx1c8ffbg/image/upload/v1652375881/Screenshot_768_vbza6s.png)
-!(https://res.cloudinary.com/dx1c8ffbg/image/upload/v1652375881/Screenshot_772_mhy7fd.png)
-!(https://res.cloudinary.com/dx1c8ffbg/image/upload/v1652375883/Screenshot_769_l121ac.png)
-!(https://res.cloudinary.com/dx1c8ffbg/image/upload/v1652375881/Screenshot_770_qa05g6.png)
+![image](https://res.cloudinary.com/dx1c8ffbg/image/upload/v1652375881/Screenshot_768_vbza6s.png)
+![image](https://res.cloudinary.com/dx1c8ffbg/image/upload/v1652375881/Screenshot_772_mhy7fd.png)
+![image](https://res.cloudinary.com/dx1c8ffbg/image/upload/v1652375883/Screenshot_769_l121ac.png)
+![image](https://res.cloudinary.com/dx1c8ffbg/image/upload/v1652375881/Screenshot_770_qa05g6.png)
