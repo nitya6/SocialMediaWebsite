@@ -114,13 +114,8 @@ app.post('/register',catchAsync(async (req,res,next)=>{
    const JDate=date.format(new Date(), 'DD/MM/YYYY');
    const user=new User({username,email,JDate});
    const registeredUser=await User.register(user,password);
-   req.login(registeredUser, err => {
-    if (err) return next(err);
-    req.flash('success', 'Succesfully registered!');
-    res.redirect(`/${user._id}`);
-}).catch (e)
-req.flash('error', e.message);
-res.redirect('/');
+    req.flash('success', 'Succesfully registered!Login to go to home page');
+    res.redirect('/');
 }));
 app.post('/search',catchAsync(async (req,res,next)=>{
   const {username}=req.body;
