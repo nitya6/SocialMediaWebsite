@@ -91,12 +91,12 @@
                     <div class="card card-body">
                       <% for(let [j,c] of posts[i].comments.entries()){ %>
                         <div class="row">
-                          <div class="col-md-1"><a href="/<%=c.user._id%>/profile"><img src="<%=c.user.profilePic%>"class="rounded-circle comm" alt=""></a></div>
+                          <div class="col-lg-1"><a href="/<%=c.user._id%>/profile"><img src="<%=c.user.profilePic%>"class="rounded-circle comm" alt=""></a></div>
                           <div class="col" >
                             <div class="row">
                               <div class="col"><div style="font-weight: bolder;"><%=c.user.username%></div><div><%=c.comment%></div></div>
                               <% if(currentUser._id.equals(c.user._id)){ %> 
-                              <div class="col-md-2"><form action="/<%=user._id%>/<%=posts[i]._id%>/delcomment?_method=PATCH" method="post"><input type="hidden" id="" name="i" value="<%=j%>"><button class="btn btn-sm btn-danger">remove</button></form></div>
+                              <div class="col-lg-2"><form action="/<%=user._id%>/<%=posts[i]._id%>/delcomment?_method=PATCH" method="post"><input type="hidden" id="" name="i" value="<%=j%>"><button class="btn btn-sm btn-danger">remove</button></form></div>
                               <% } %> 
                           </div>
                         </div>
