@@ -141,7 +141,7 @@ app.get('/:userid',catchAsync(async (req,res,next)=>{
     {
    let i=0;
    let art=[];
-   while(i<10)
+   while(i<5)
    {
        let x=Math.floor(articles.length*Math.random())
        if(!art.includes(articles[x]))
