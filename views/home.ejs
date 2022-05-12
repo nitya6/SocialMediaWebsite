@@ -1,7 +1,7 @@
 <% layout('layout/boilerplate.ejs') %> 
-<div class="container">
+<div class="container ml-0 mr-0">
 <div class="row m-md-5">
-  <div class="col-md-6">
+  <div class="col-md-7">
 <%if(user._id.equals(currentUser._id)){ %> 
     <div class="card win">
         <div class="card-body">
@@ -91,7 +91,7 @@
                     <div class="card card-body">
                       <% for(let [j,c] of posts[i].comments.entries()){ %>
                         <div class="row">
-                          <div class="col-1"><a href="/<%=c.user._id%>/profile"><img src="<%=c.user.profilePic%>"class="rounded-circle" style="width:40px;height:40px;object-fit: cover;"alt=""></a></div>
+                          <div class="col-1"><a href="/<%=c.user._id%>/profile"><img src="<%=c.user.profilePic%>"class="rounded-circle comm" alt=""></a></div>
                           <div class="col" >
                             <div class="row">
                               <div class="col"><div style="font-weight: bolder;"><%=c.user.username%></div><div><%=c.comment%></div></div>
@@ -111,7 +111,7 @@
                 </div>
                 <p></p>
                 <% } %> 
-            <form class="form-inline row"action="/<%=currentUser._id%>/<%=posts[i]._id%>/comment?_method=PATCH" method="post"><div class="col-1"><a href="/<%=currentUser._id%>/profile"><img src="<%=currentUser.profilePic%>"class="rounded-circle comm" style="width:40px;height:40px;object-fit: cover;"alt=""></a></div><div class="col"><input class="form-control"type="text" name="comment"placeholder="Write a comment..."></div></form>
+            <form class="form-inline row"action="/<%=currentUser._id%>/<%=posts[i]._id%>/comment?_method=PATCH" method="post"><div class="col-1"><a href="/<%=currentUser._id%>/profile"><img src="<%=currentUser.profilePic%>"class="rounded-circle comm" alt=""></a></div><div class="col"><input class="form-control"type="text" name="comment"placeholder="Write a comment..."></div></form>
           </div>
         </div>
         <br>
@@ -157,14 +157,14 @@
         <%} %>
       </div>
       <%if(Users.length!==0) { %> 
-      <div class="col-md-3">
+      <div class="col-md-2">
         <h4 class=""><b>People you may know </b></h4>
         <% if(Users.length<5){%> 
        <%for(let x=0;x<Users.length;x++){ %>
         <div class="bg-white p-2">
         <a href="/<%=Users[x]._id%>/profile"><img class="rounded-circle" src="<%=Users[x].profilePic%>" style="width: 48px;height: 48px;object-fit:cover" alt=""></a> <a class="text-dark"href="/<%=Users[x]._id%>/profile"><%=Users[x].username%></a> 
           <form action="/<%=Users[x]._id%>/follow?_method=PATCH" method="post">
-            <button class="follow btn btn-primary"><%if(currentUser.following.indexOf(Users[x]._id)===-1){%>Follow<%}else{%>Unfollow<%}%></button>
+            <button class="follow btn-md-lg btn-sm-sm btn-primary"><%if(currentUser.following.indexOf(Users[x]._id)===-1){%>Follow<%}else{%>Unfollow<%}%></button>
             </form>
         </div>
         <% } %>  

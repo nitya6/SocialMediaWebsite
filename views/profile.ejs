@@ -152,12 +152,12 @@
                     <div class="card card-body">
                       <% for(let [i,c] of p.comments.entries()){ %>
                         <div class="row">
-                          <div class="col-1"><img src="<%=c.user.profilePic%>"class="rounded-circle" style="width:40px;height:40px;object-fit: cover;"alt=""></div>
+                          <div class="col-1"><img src="<%=c.user.profilePic%>"class="rounded-circle comm" alt=""></div>
                           <div class="col" >
                             <div class="row">
                               <div class="col"><div style="font-weight: bolder;"><%=c.user.username%></div><div><%=c.comment%></div></div>
                               <% if(currentUser._id.equals(c.user._id)){ %> 
-                              <div class="col-2"><form action="/<%=user._id%>/<%=p._id%>/delcomment?_method=PATCH" method="post"><input type="hidden" id="" name="i" value="<%=i%>"><button class="btn btn-sm btn-danger">remove</button></form></div>
+                              <div class="col-md-2"><form action="/<%=user._id%>/<%=p._id%>/delcomment?_method=PATCH" method="post"><input type="hidden" id="" name="i" value="<%=i%>"><button class="btn btn-sm btn-danger">remove</button></form></div>
                               <% } %> 
                           </div>
                         </div>
@@ -172,7 +172,7 @@
                 </div>
                 <p></p>
                 <% } %> 
-            <form class="form-inline row"action="/<%=currentUser._id%>/<%=p._id%>/comment?_method=PATCH" method="post"><div class="col-1"><a href="/<%=currentUser._id%>/profile"><img src="<%=currentUser.profilePic%>"class="rounded-circle comm" style="width:40px;height:40px;object-fit: cover;"alt=""></a></div><div class="col"><input class="form-control"type="text" name="comment"placeholder="Write a comment..."></div></form>
+            <form class="form-inline row"action="/<%=currentUser._id%>/<%=p._id%>/comment?_method=PATCH" method="post"><div class="col-1"><a href="/<%=currentUser._id%>/profile"><img src="<%=currentUser.profilePic%>"class="rounded-circle comm" alt=""></a></div><div class="col"><input class="form-control"type="text" name="comment"placeholder="Write a comment..."></div></form>
           </div>
         </div>
         <br>
