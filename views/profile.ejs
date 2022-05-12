@@ -1,0 +1,254 @@
+<% layout('layout/boilerplate.ejs') %>  
+<div class="container d-flex flex-column align-items-center">
+    <a href="<%=user.profilePic%>"><img class="rounded-circle"src="<%=user.profilePic%>"alt="" style="height: 250px;width: 250px;object-fit:cover;border:5px solid white"></a>
+    <h1><%=user.username%></h1>  
+    <% if(user.Bio!=="") {%>
+      <div style="color:black;"><b><%=user.Bio%> </b></div> 
+      <% } %> 
+      <div style="color:black;"><a role="button"data-toggle="modal" data-target="#exampleModalCenterfollowing"><b><%=user.following.length%> Following</b></a>   <a role="button"data-toggle="modal" data-target="#exampleModalCenterfollowers"><b><%=user.followers.length%> Followers</b></a></div>
+
+<div class="modal fade" id="exampleModalCenterfollowing" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Following</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <% if(user.following.length===0){%>
+          You are not following anyone!
+          <% } else{%>  
+        <% for(let i of user.following){ %>
+          <a class="text-dark nav-link"href="/<%=i._id%>/profile"><div><img src="<%=i.profilePic%>" class="rounded-circle"style="width:24px;height:24px  ;"alt=""> <%=i.username%> </div></a> 
+          <hr>
+          <% } %> 
+          <% } %> 
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="exampleModalCenterfollowers" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Followers</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <% if(user.followers.length===0){ %>
+          No Followers!
+          <% }else{ %>  
+        <% for(let i of user.followers){ %>
+          <a class="text-dark nav-link"href="/<%=i._id%>/profile"><div><img src="<%=i.profilePic%>" class="rounded-circle"style="width:24px;height:24px  ;"alt=""> <%=i.username%> </div></a> 
+          <hr>
+          <% } %> 
+          <% } %> 
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+    <div style="color:black;"><img src="https://img.icons8.com/material-outlined/24/000000/calendar.png"/><b> Joined <%=user.JDate%></b></div>
+    <%if(user._id.equals(currentUser._id)){%> 
+        <button type="button" class="btn edit" data-toggle="modal" data-target="#exampleModalCenter">
+          <img src="https://img.icons8.com/material-rounded/24/000000/edit--v1.png"/> Edit Profile
+        </button>
+        <% } else{%>
+          <form action="/<%=user._id%>/follow?_method=PATCH" method="post">
+           <button class="follow btn btn-primary"><%if(currentUser.following.indexOf(user._id)===-1){%>Follow<%}else{%>Unfollow<%}%></button>
+           </form>
+           <% } %> 
+        <br>
+       <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Edit Profile</h5>
+              <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <span><img src="<%=user.profilePic%>" class="rounded-circle" style="width: 48px;height:48px;object-fit:cover"alt=""> Upload Profile Picture </span><form class="d-inline"action="/<%=user._id%>/profilepic/delete?_method=PATCH" method="post"><button class="btn btn-sm btn-danger">Remove</button></form>
+              <form action="/<%=user._id%>/editprofile?_method=PATCH" method="post" enctype="multipart/form-data">
+                <input class="form-control"type="file" name="image"value="<%=user.profilePic%>">
+                <label for="Bio"class="form-label">Add Bio</label>
+                <textarea class="form-control" id="Bio" name="Bio" cols="30" rows="2"><%=user.Bio%></textarea>
+                <button class="btn btn-success">Save</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%if(user._id.equals(currentUser._id)){ %> 
+    <div class="card bin">
+        <div class="card-body">
+          <a href="/<%=user._id%>/profile"><img class="rounded-circle"src="<%=user.profilePic%>" style="width: 48px;height: 48px;object-fit:cover" alt=""></a> <button data-toggle="modal" data-target="#exampleModalCenter2" class="rounded btn edit btn-lg">Add a Post<img style="width: 40px;height: 40px;"src="https://img.icons8.com/color/48/000000/add--v2.png"/></button>
+        </div>
+      </div>
+      <br>
+      <% } %> 
+      <%for(const [j,p] of user.posts.entries()){%>
+        <div class="card bin">
+          <div class="card-body">
+           <div class="row d-flex w-100">
+             <div class="col">
+               <a href="/<%=p.user._id%>/profile" class="p-0 m-0 nav-link text-dark"><img class="rounded-circle"src="<%=user.profilePic%>" style="width: 48px;height: 48px;object-fit:cover" alt=""> <b><%=user.username %></b><span class="text-muted"> <%=p.date %></span></a>
+               </div>
+               <div class="col-1">
+                <%if(user._id.equals(currentUser._id)){%> 
+                <div class="dropdown dropleft">
+                  <button class="btn btn-sm edit btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <form action="/<%=user._id%>/<%=p._id%>/delete?_method=DELETE" method="post"><button class="btn"><b>Delete Post</b></button></form>
+                    <button class="btn" data-toggle="modal" data-target="#exampleModalCenteri<%=j%>"><b>Edit Post</b></button>
+                  </div>
+                </div>
+                <% } %> 
+               </div>
+              </div>
+            <%if(p.post.status){%>
+            <%=p.post.status  %> 
+            <% } %> 
+            <%if(p.post.photos.length){%>
+            <div style="interval:false"id="carouselExampleControls<%=j%>" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+              <% for(let i=0;i<p.post.photos.length;i++){ %> 
+                <div class="carousel-item <%=i==0?'active':"" %> ">
+                  <img class="d-block w-100" src="<%=p.post.photos[i]%> " alt="First slide">
+                </div>
+               <% } %> 
+              </div> 
+              <% if(p.post.photos.length>1) {%> 
+            <a class="carousel-control-prev" href="#carouselExampleControls<%=j%>" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls<%=j%>" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+            <% } %> 
+            </div>
+            <% } %> 
+            <hr>
+            <button class="btn btn-sm rounded-circle" <%if(p.likes.indexOf(currentUser._id)===-1){%>style="background-color:white"<% }else{%>style="background-color:lightblue"<% } %> ><img onclick="actOnPost(event);" id="like<%=p._id%>" userId="<%=user._id%>" postId="<%=p._id%>" src="https://img.icons8.com/external-tal-revivo-filled-tal-revivo/24/000000/external-like-thumbs-up-button-from-popular-social-media-logo-filled-tal-revivo.png"/></button><span class="text-secondary"id="likenum<%=p._id%>"> <%=p.likes.length%></span>
+            <hr>
+            <% if(p.comments.length>0){ %> 
+              <p>
+                <a class="link-secondary"  data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Show Comments</a>
+              </p>
+              <div class="row">
+                <div class="col">
+                  <div class="collapse multi-collapse" id="multiCollapseExample1">
+                    <div class="card card-body">
+                      <% for(let [i,c] of p.comments.entries()){ %>
+                        <div class="row">
+                          <div class="col-1"><img src="<%=c.user.profilePic%>"class="rounded-circle" style="width:40px;height:40px;object-fit: cover;"alt=""></div>
+                          <div class="col" >
+                            <div class="row">
+                              <div class="col"><div style="font-weight: bolder;"><%=c.user.username%></div><div><%=c.comment%></div></div>
+                              <% if(currentUser._id.equals(c.user._id)){ %> 
+                              <div class="col-2"><form action="/<%=user._id%>/<%=p._id%>/delcomment?_method=PATCH" method="post"><input type="hidden" id="" name="i" value="<%=i%>"><button class="btn btn-sm btn-danger">remove</button></form></div>
+                              <% } %> 
+                          </div>
+                        </div>
+                        </div>
+                        <% if(i<p.comments.length-1){ %> 
+                        <hr>
+                        <% } %> 
+                        <%}%>
+                    </div>
+                  </div>
+                </div>
+                </div>
+                <p></p>
+                <% } %> 
+            <form class="form-inline row"action="/<%=currentUser._id%>/<%=p._id%>/comment?_method=PATCH" method="post"><div class="col-1"><a href="/<%=currentUser._id%>/profile"><img src="<%=currentUser.profilePic%>"class="rounded-circle" style="width:40px;height:40px;object-fit: cover;"alt=""></a></div><div class="col"><input class="form-control"type="text" name="comment"placeholder="Write a comment..."></div></form>
+          </div>
+        </div>
+        <br>
+        <div class="modal fade" id="exampleModalCenteri<%=j%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Post</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                 <form action="/<%=user._id%>/<%=p._id%>/edit?_method=PATCH" method="post" enctype="multipart/form-data">
+                   <label class="form-label"for="">Edit Status</label>
+                   <textarea class="form-control"name="status" id="" cols="30" rows="2"><%=p.post.status%> </textarea>
+                   <label class="form-label"for="">Add More Photos</label>
+                   <input type="file" name="photos"class="form-control"multiple>
+                   <% if(p.post.photos.length) {%> 
+                   <label class="form-label"for="">Delete photos?</label>
+                    <% for(let photo of p.post.photos){%>
+                      <div><input type="checkbox" name="deletePhotos[]" value=<%=photo%>><img style="width: 100px;height:200px"src="<%=photo%>" alt=""></div>
+                      <br>
+                      <% } %>   
+                    <% } %> 
+                    <br>
+                    <button class="btn btn-lg btn-success">Save</button>
+                 </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%}%>
+</div>
+<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Add a Post</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/<%=user._id%>/add" enctype="multipart/form-data" method="post">
+          <label class="form-label"for="">Whats on your mind?</label>
+          <textarea class="form-control valid1" name="status" id="" cols="30" rows="2"></textarea>
+          <label class="form-label" for="photos">Upload Photos/Videos</label>
+          <input class="form-control valid2"type="file" name="photos" multiple>
+          <br>
+          <button class="btn btn-lg btn-success valid3 disabled">Post</button>
+        </form>
+      </div>
+    </div>
+    </div>
+    </div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  const actOnPost=function(event){
+    const postId=event.target.getAttribute('postId');
+    const userId=event.target.getAttribute('userId');
+  const likenum=document.querySelector(`#likenum${postId}`);
+    if(event.target.parentElement.style.backgroundColor==='lightblue')
+    {
+      const c=likenum.textContent.trim()
+      likenum.textContent=` ${parseInt(c)-1}`
+      event.target.parentElement.style.backgroundColor="white";
+    }
+    else
+    {
+      const c=likenum.textContent.trim()
+      likenum.textContent=` ${parseInt(c)+1}`
+      event.target.parentElement.style.backgroundColor="lightblue";
+    }
+    axios.patch(`/${userId}/${postId}/like`);
+  }
+</script>
+
+

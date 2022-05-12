@@ -1,0 +1,210 @@
+<% layout('layout/boilerplate.ejs') %> 
+<div class="row m-5">
+  <div class="col-md-6">
+<%if(user._id.equals(currentUser._id)){ %> 
+    <div class="card win">
+        <div class="card-body">
+          <a href="/<%=user._id%>/profile"><img class="rounded-circle"src="<%=user.profilePic%>" style="width: 48px;height: 48px;object-fit:cover" alt=""></a> <button data-toggle="modal" data-target="#exampleModalCenter2" class="rounded btn edit btn-lg">Add a Post<img style="width: 40px;height: 40px;"src="https://img.icons8.com/color/48/000000/add--v2.png"/></button>
+        </div>
+      </div>
+      <br>
+      <% } %> 
+    <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Add a Post</h5>
+              <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="/<%=user._id%>/add" enctype="multipart/form-data" method="post">
+                <label class="form-label"for="">Whats on your mind?</label>
+                <textarea class="form-control valid1" name="status" id="" cols="30" rows="2"></textarea>
+                <label class="form-label" for="photos">Upload Photos/Videos</label>
+                <input class="form-control valid2"type="file" name="photos" multiple>
+                <br>
+                <button class="btn btn-lg btn-success valid3 disabled">Post</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        </div>
+      <br>
+      <% for(let i=posts.length-1;i>=0;i--){%> 
+        <% if((posts[i].user._id).equals(currentUser._id) || currentUser.following.includes(posts[i].user._id)) {%> 
+      <div class="card win">
+        <div class="card-body">
+         <div class="row d-flex w-100">
+           <div class="col">
+             <a href="/<%=posts[i].user._id%>/profile" class="m-0 p-0 text-dark nav-link"><img class="rounded-circle"src="<%=posts[i].user.profilePic%>" style="width: 48px;height: 48px;object-fit:cover" alt=""> <b><%=posts[i].user.username %></b><span class="text-muted"> <%=posts[i].date %></span></a>
+             </div>
+             <div class="col-1">
+              <%if(posts[i].user._id.equals(currentUser._id)){%> 
+              <div class="dropdown dropleft">
+                <button class="btn btn-sm edit btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <form action="/<%=posts[i].user._id%>/<%=posts[i]._id%>/delete?_method=DELETE" method="post"><button class="btn"><b>Delete Post</b></button></form>
+                  <button class="btn" data-toggle="modal" data-target="#exampleModalCenteri<%=i%>"><b>Edit Post</b></button>
+                </div>
+              </div>
+              <% } %> 
+             </div>
+            </div>
+          <%if(posts[i].post.status){%>
+          <%=posts[i].post.status%> 
+          <% } %> 
+          <%if(posts[i].post.photos.length){%>
+          <div style="interval:false"id="carouselExampleControls<%=i%>" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+            <% for(let j=0;j<posts[i].post.photos.length;j++){ %> 
+              <div class="carousel-item <%=j==0?'active':"" %> ">
+                <img class="d-block w-100" src="<%=posts[i].post.photos[j]%> " alt="First slide">
+              </div>
+             <% } %> 
+            </div> 
+            <% if(posts[i].post.photos.length>1) {%> 
+          <a class="carousel-control-prev" href="#carouselExampleControls<%=i%>" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleControls<%=i%>" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+          <% } %> 
+          </div>
+          <% } %> 
+          <hr>
+          <button class="btn btn-sm rounded-circle" <%if(posts[i].likes.indexOf(currentUser._id)===-1){%>style="background-color:white"<% }else{%>style="background-color:lightblue"<% } %> ><img id="like<%=posts[i]._id%>" onclick="actOnPost(event);"  userId="<%=user._id%>" postId="<%=posts[i]._id%>" src="https://img.icons8.com/external-tal-revivo-filled-tal-revivo/24/000000/external-like-thumbs-up-button-from-popular-social-media-logo-filled-tal-revivo.png"/></button><span class="text-secondary"id="likenum<%=posts[i]._id%>"> <%=posts[i].likes.length%></span>
+            <hr>
+            <% if(posts[i].comments.length>0){ %> 
+              <p>
+                <a class="link-secondary"  data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Show Comments</a>
+              </p>
+              <div class="row">
+                <div class="col">
+                  <div class="collapse multi-collapse" id="multiCollapseExample1">
+                    <div class="card card-body">
+                      <% for(let [j,c] of posts[i].comments.entries()){ %>
+                        <div class="row">
+                          <div class="col-1"><a href="/<%=c.user._id%>/profile"><img src="<%=c.user.profilePic%>"class="rounded-circle" style="width:40px;height:40px;object-fit: cover;"alt=""></a></div>
+                          <div class="col" >
+                            <div class="row">
+                              <div class="col"><div style="font-weight: bolder;"><%=c.user.username%></div><div><%=c.comment%></div></div>
+                              <% if(currentUser._id.equals(c.user._id)){ %> 
+                              <div class="col-2"><form action="/<%=user._id%>/<%=posts[i]._id%>/delcomment?_method=PATCH" method="post"><input type="hidden" id="" name="i" value="<%=j%>"><button class="btn btn-sm btn-danger">remove</button></form></div>
+                              <% } %> 
+                          </div>
+                        </div>
+                        </div>
+                        <% if(j<posts[i].comments.length-1){ %> 
+                        <hr>
+                        <% } %> 
+                        <%}%>
+                    </div>
+                  </div>
+                </div>
+                </div>
+                <p></p>
+                <% } %> 
+            <form class="form-inline row"action="/<%=currentUser._id%>/<%=posts[i]._id%>/comment?_method=PATCH" method="post"><div class="col-1"><a href="/<%=currentUser._id%>/profile"><img src="<%=currentUser.profilePic%>"class="rounded-circle" style="width:40px;height:40px;object-fit: cover;"alt=""></a></div><div class="col"><input class="form-control"type="text" name="comment"placeholder="Write a comment..."></div></form>
+          </div>
+        </div>
+        <br>
+    <% } %> 
+        <div class="modal fade" id="exampleModalCenteri<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Post</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                 <form action="/<%=posts[i].user._id%>/<%=posts[i]._id%>/edit?_method=PATCH" method="post" enctype="multipart/form-data">
+                   <label class="form-label"for="">Edit Status</label>
+                   <textarea class="form-control"name="status" id="" cols="30" rows="2"><%=posts[i].post.status%> </textarea>
+                   <label class="form-label"for="">Add More Photos</label>
+                   <input type="file" name="photos"class="form-control"multiple>
+                   <% if(posts[i].post.photos.length) {%> 
+                   <label class="form-label"for="">Delete photos?</label>
+                    <% for(let photo of posts[i].post.photos){%>
+                      <div><input type="checkbox" name="deletePhotos[]" value=<%=photo%>><img style="width: 100px;height:200px"src="<%=photo%>" alt=""></div>
+                      <br>
+                      <% } %>   
+                    <% } %> 
+                    <br>
+                    <button class="btn btn-lg btn-success">Save</button>
+                 </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% } %> 
+      </div>
+      <div class="col-md">
+        <h4><b>Trending news</b></h4>
+        <% for(let i=0;i<10;i++){%> 
+          <div class="bg-white p-2">
+        <b><%=articles[i].title%></b>
+        <div>Read Article <a href="<%=articles[i].url%>">Click here</a></div>
+        </div>
+        <%} %>
+      </div>
+      <%if(Users.length!==0) { %> 
+      <div class="col-md-3">
+        <h4 class=""><b>People you may know </b></h4>
+        <% if(Users.length<5){%> 
+       <%for(let x=0;x<Users.length;x++){ %>
+        <div class="bg-white p-2">
+        <a href="/<%=Users[x]._id%>/profile"><img class="rounded-circle" src="<%=Users[x].profilePic%>" style="width: 48px;height: 48px;object-fit:cover" alt=""></a> <a class="text-dark"href="/<%=Users[x]._id%>/profile"><%=Users[x].username%></a> 
+          <form action="/<%=Users[x]._id%>/follow?_method=PATCH" method="post">
+            <button class="follow btn btn-primary"><%if(currentUser.following.indexOf(Users[x]._id)===-1){%>Follow<%}else{%>Unfollow<%}%></button>
+            </form>
+        </div>
+        <% } %>  
+        <% } %> 
+        <% if(Users.length>=5){ %>  
+          <%for(let x=0;x<5;x++){ %>
+            <div class="bg-white p-2">
+            <a href="/<%=Users[x]._id%>/profile"><img class="rounded-circle" src="<%=Users[x].profilePic%>" style="width: 48px;height: 48px;object-fit:cover" alt=""></a> <a class="text-dark"href="/<%=Users[x]._id%>/profile"><%=Users[x].username%></a> 
+            <p></p>
+              <form action="/<%=Users[x]._id%>/follow?_method=PATCH" method="post">
+                <button class="follow btn btn-primary"><%if(currentUser.following.indexOf(Users[x]._id)===-1){%>Follow<%}else{%>Unfollow<%}%></button>
+                </form>
+            </div>
+            <% } %>  
+          <% } %> 
+    </div>
+    <% } %>
+  </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  const actOnPost=function(event){
+    const postId=event.target.getAttribute('postId');
+    const userId=event.target.getAttribute('userId');
+  const likenum=document.querySelector(`#likenum${postId}`);
+    if(event.target.parentElement.style.backgroundColor==='lightblue')
+    {
+      const c=likenum.textContent.trim()
+      likenum.textContent=` ${parseInt(c)-1}`
+      event.target.parentElement.style.backgroundColor="white";
+    }
+    else
+    {
+      const c=likenum.textContent.trim()
+      likenum.textContent=` ${parseInt(c)+1}`
+      event.target.parentElement.style.backgroundColor="lightblue";
+    }
+    axios.patch(`/${userId}/${postId}/like`);
+  }
+</script>
+
+
+
+
+        
