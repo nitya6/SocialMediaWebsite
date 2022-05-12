@@ -117,7 +117,7 @@ app.post('/register',catchAsync(async (req,res,next)=>{
    req.login(registeredUser, err => {
     if (err) return next(err);
     req.flash('success', 'Succesfully registered!');
-    res.redirect(`/${req.user._id}`);
+    res.redirect(`/${user._id}`);
 }).catch (e)
 req.flash('error', e.message);
 res.redirect('/');

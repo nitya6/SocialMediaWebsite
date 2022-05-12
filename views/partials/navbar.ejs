@@ -4,7 +4,7 @@
       <a class="navbar-brand" href="/<%=currentUser._id%>">ReachMe</a>
       <div class="nav-link dropdown dropleft">
         <button userId="<%=currentUser._id%>" onclick="notif(event)" class="btn btn-sm btn-secondary bg-white text-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAsklEQVRIie2TMQ6CQBBFnzaYeATt4DB4AI4h8Tq23kVjYoO1VngG7QwUjpFsQHZGNyHRn/xqd9+bJSz8UhLgLE18D40VggyIpZlqtJ5EQM5j8kp6Apay9lHmwLEBdlsAMys86oE3JaabrDzgz+YWwUEh2FsEN4Xg2gUZvRFUyoFaWZp3YMpfMEzBBFgbWBtg6rNxh///73brwtpucFfP/p2z4XPh9SnKEIKFgEsgDSEYZmqDQFU09ljjZAAAAABJRU5ErkJggg=="/><sup id="sup" class="bg-danger" style="font-size:larger"><b><%if(currentUser.newnoti>0){%><%=currentUser.newnoti%><%}%></b></sup>
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAsklEQVRIie2TMQ6CQBBFnzaYeATt4DB4AI4h8Tq23kVjYoO1VngG7QwUjpFsQHZGNyHRn/xqd9+bJSz8UhLgLE18D40VggyIpZlqtJ5EQM5j8kp6Apay9lHmwLEBdlsAMys86oE3JaabrDzgz+YWwUEh2FsEN4Xg2gUZvRFUyoFaWZp3YMpfMEzBBFgbWBtg6rNxh///73brwtpucFfP/p2z4XPh9SnKEIKFgEsgDSEYZmqDQFU09ljjZAAAAABJRU5ErkJggg=="/><sup id="sup" class="bg-danger text-light" style="font-size:larger"><b><%if(currentUser.newnoti>0){%><%=currentUser.newnoti%><%}%></b></sup>
         </button>
         <div class="dropdown-menu bg-dark text-light"aria-labelledby="dropdownMenuButton">
           <%if(currentUser.notification.length===0){%>

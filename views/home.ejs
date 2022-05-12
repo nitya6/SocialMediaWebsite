@@ -1,5 +1,6 @@
 <% layout('layout/boilerplate.ejs') %> 
-<div class="row m-5">
+<div class="container">
+<div class="row m-md-5">
   <div class="col-md-6">
 <%if(user._id.equals(currentUser._id)){ %> 
     <div class="card win">
@@ -110,7 +111,7 @@
                 </div>
                 <p></p>
                 <% } %> 
-            <form class="form-inline row"action="/<%=currentUser._id%>/<%=posts[i]._id%>/comment?_method=PATCH" method="post"><div class="col-1"><a href="/<%=currentUser._id%>/profile"><img src="<%=currentUser.profilePic%>"class="rounded-circle" style="width:40px;height:40px;object-fit: cover;"alt=""></a></div><div class="col"><input class="form-control"type="text" name="comment"placeholder="Write a comment..."></div></form>
+            <form class="form-inline row"action="/<%=currentUser._id%>/<%=posts[i]._id%>/comment?_method=PATCH" method="post"><div class="col-1"><a href="/<%=currentUser._id%>/profile"><img src="<%=currentUser.profilePic%>"class="rounded-circle comm" style="width:40px;height:40px;object-fit: cover;"alt=""></a></div><div class="col"><input class="form-control"type="text" name="comment"placeholder="Write a comment..."></div></form>
           </div>
         </div>
         <br>
@@ -181,6 +182,7 @@
           <% } %> 
     </div>
     <% } %>
+  </div>
   </div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
