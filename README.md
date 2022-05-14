@@ -13,8 +13,11 @@ Key functionalities of this website:-
 9)Deleting Post
 10)Displays trending news through newsapi
 11)Suggests people who we may know
-
-![image](https://res.cloudinary.com/dx1c8ffbg/image/upload/v1652375881/Screenshot_768_vbza6s.png)
-![image](https://res.cloudinary.com/dx1c8ffbg/image/upload/v1652375881/Screenshot_772_mhy7fd.png)
-![image](https://res.cloudinary.com/dx1c8ffbg/image/upload/v1652375883/Screenshot_769_l121ac.png)
-![image](https://res.cloudinary.com/dx1c8ffbg/image/upload/v1652375881/Screenshot_770_qa05g6.png)
+## Login Page
+![image](https://res.cloudinary.com/dx1c8ffbg/image/upload/v1652532430/Screenshot_777_me5wp0.png)
+## Home Page
+![image](https://res.cloudinary.com/dx1c8ffbg/image/upload/v1652532277/Screenshot_768_edi6ci.png)
+## Profile Page
+![image](https://res.cloudinary.com/dx1c8ffbg/image/upload/v1652532276/Screenshot_772_cpahnx.png)
+![image](https://res.cloudinary.com/dx1c8ffbg/image/upload/v1652532277/Screenshot_769_uatouj.png)
+![image](https://res.cloudinary.com/dx1c8ffbg/image/upload/v1652532276/Screenshot_770_sowxff.png)
