@@ -13,6 +13,7 @@ Key functionalities of this website:-
 9)Deleting Post
 10)Displays trending news through newsapi
 11)Suggests people who we may know
+
 ## Login Page
 ![image](https://res.cloudinary.com/dx1c8ffbg/image/upload/v1652532430/Screenshot_777_me5wp0.png)
 ## Home Page
