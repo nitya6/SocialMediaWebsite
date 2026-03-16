@@ -8,7 +8,7 @@ Key functionalities of this website:-
 4)Commenting and deleting comment
 5)Liking and unliking
 6)Following and Unfollowing
-7)Uploading Profile Picture and updating bio
+7)Uploading Profile Picture and updating bio.
 8)Adding Post(status,Photos)
 9)Deleting Post
 10)Displays trending news through newsapi
